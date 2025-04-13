@@ -92,10 +92,11 @@ Check the [`.github/workflows/auth.yml`](.github/workflows/auth.yml) for details
 ---
 
 ## 👥 Team Members
-- Your Name 1
-- Your Name 2
-- Your Name 3
-- Your Name 4
+- Mohamed Ali Ben Salah
+- Chahin Chaabane
+- Mohamed Salah Zrigua
+- Nour Mrad
+- Mustapha Rekik
 
 ---
 
@@ -110,6 +111,7 @@ Check the [`.github/workflows/auth.yml`](.github/workflows/auth.yml) for details
 ├── test_cases.txt
 ├── uml_auth_architecture.png
 ├── README.md
+├── .vscode
 └── .github/
     └── workflows/
         └── auth.yml
