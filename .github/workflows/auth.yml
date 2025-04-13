@@ -1,0 +1,30 @@
+
+name: C++ Build & Test
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Install OpenSSL and Build Essentials
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libssl-dev build-essential g++
+
+    - name: Compile Project
+      run: |
+        make
+
+    - name: Run Authentication Program (Simulation)
+      run: |
+        echo "Simulation complete. Add real tests using test framework if needed."
