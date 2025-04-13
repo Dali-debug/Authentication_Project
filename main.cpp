@@ -1,17 +1,36 @@
 #include <iostream>
 #include <random>
-#include <conio.h> // Windows only
 #include "file_handler.h"
 #include "hash.h"
 #include "user.h"
 
-// Masquer la saisie du mot de passe avec '*'
+// ===== CROSS-PLATFORM getch() =====
+#ifdef _WIN32
+#include <conio.h>
+#else
+#include <termios.h>
+#include <unistd.h>
+
+char getch() {
+    struct termios oldt{}, newt{};
+    char ch;
+    tcgetattr(STDIN_FILENO, &oldt);
+    newt = oldt;
+    newt.c_lflag &= ~(ICANON | ECHO);
+    tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+    ch = getchar();
+    tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
+    return ch;
+}
+#endif
+
+// Password input hidden
 std::string inputHiddenPassword() {
     std::string password;
     char ch;
 
-    while ((ch = _getch()) != '\r') { // Entrée = fin
-        if (ch == '\b') { // Backspace
+    while ((ch = getch()) != '\r' && ch != '\n') { // Enter key
+        if (ch == '\b' || ch == 127) { // Backspace
             if (!password.empty()) {
                 password.pop_back();
                 std::cout << "\b \b";
@@ -25,7 +44,7 @@ std::string inputHiddenPassword() {
     return password;
 }
 
-// Générer un sel aléatoire
+// Salt generator
 std::string generateSalt(size_t length = 16) {
     const std::string charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     std::string salt;
@@ -40,7 +59,6 @@ std::string generateSalt(size_t length = 16) {
     return salt;
 }
 
-// Vérifier si l'utilisateur existe déjà
 bool userExists(const std::vector<User>& users, const std::string& username) {
     for (const auto& user : users) {
         if (user.getUsername() == username) return true;
@@ -48,7 +66,6 @@ bool userExists(const std::vector<User>& users, const std::string& username) {
     return false;
 }
 
-// Enregistrement
 void registerUser(FileHandler& handler) {
     std::string uname;
     std::cout << "=====Registration=====\n";
@@ -71,7 +88,6 @@ void registerUser(FileHandler& handler) {
     std::cout << "User registered successfully.\n";
 }
 
-// Connexion
 void loginUser(FileHandler& handler) {
     std::string uname;
     std::cout << "=====Login=====\n";
