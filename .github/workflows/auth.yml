@@ -1,4 +1,3 @@
-
 name: C++ Build & Test
 
 on:
@@ -25,6 +24,7 @@ jobs:
       run: |
         make
 
-    - name: Run Authentication Program (Simulation)
+    - name: Run Automated Test Cases
       run: |
-        echo "Simulation complete. Add real tests using test framework if needed."
+        echo "Running test cases:"
+        ./auth_app < test_cases.txt
