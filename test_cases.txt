@@ -1,0 +1,22 @@
+# Test 1: Register new user
+1
+Dali
+dalipasstest13
+
+# Test 2: Login with correct credentials
+2
+Dali
+dalipasstest13
+
+# Test 3: Login with wrong password
+2
+Dali
+dali13
+
+# Test 4: Try registering with the same username again
+1
+Salah
+salahpass1021
+
+# Test 5: Exit
+0
